@@ -10,6 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.notesapp.screens.HomeScreen
+import com.example.notesapp.screens.NewNoteScreen
 import com.example.notesapp.ui.theme.NotesAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -18,29 +20,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             NotesAppTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
-            }
+                //HomeScreen()
+                NewNoteScreen()
         }
     }
 }
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    NotesAppTheme {
-        Greeting("Android")
-    }
 }
