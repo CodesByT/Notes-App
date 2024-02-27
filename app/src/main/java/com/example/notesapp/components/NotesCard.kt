@@ -1,10 +1,8 @@
 package com.example.notesapp.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -17,14 +15,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.notesapp.model.Note
 import com.example.notesapp.model.fontFamily2
-import com.example.notesapp.model.fontFamily3
 import com.example.notesapp.ui.theme.Color2
-import com.example.notesapp.ui.theme.Color3
 import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NoteCard(note: Note){
+fun NoteCard(note: Note) {
+
     Card(
         modifier = Modifier.padding(3.dp),
         onClick = { /*TODO*/ },
@@ -40,20 +37,20 @@ fun NoteCard(note: Note){
         ) {
             Text(
                 modifier = Modifier,
-                text= note.title,
+                text = note.title,
                 color = Color.White,
                 fontFamily = fontFamily2,
                 fontSize = 18.sp
             )
             Text(
-                modifier = Modifier.padding(top=5.dp),
-                text= note.entryData.format(DateTimeFormatter.ofPattern("EEE, d MMM")),
+                modifier = Modifier.padding(top = 5.dp),
+                text = note.entryData.format(DateTimeFormatter.ofPattern("EEE, d MMM")),
                 color = Color(0xFF80DEEA),
                 fontSize = 12.sp,
                 fontStyle = FontStyle.Italic
             )
             Text(
-                modifier = Modifier.padding(top=5.dp),
+                modifier = Modifier.padding(top = 5.dp),
                 text = note.description,
                 color = Color(0xEBFFFFFF),
                 fontSize = 11.sp,

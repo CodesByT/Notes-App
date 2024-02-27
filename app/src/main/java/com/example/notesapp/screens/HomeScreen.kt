@@ -48,36 +48,51 @@ import com.example.notesapp.ui.theme.Color1
 fun HomeScreen(
     notes: List<Note>,
     navController: NavController
-){
-    Scaffold (
+) {
+    Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     // Show the Username here, the person logged in
-                    Text("Notes",modifier = Modifier
-                        .padding(top = 10.dp)
-                        .padding(horizontal = 8.dp), fontFamily = fontFamily1,color = Color.Black, fontSize = 35.sp)
+                    Text(
+                        "Notes",
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .padding(horizontal = 8.dp),
+                        fontFamily = fontFamily1,
+                        color = Color.Black,
+                        fontSize = 35.sp
+                    )
 
                 },
                 actions = {
                     IconButton(
-                        onClick={},
+                        onClick = {},
                         modifier = Modifier
                             .size(40.dp)
                             .padding(end = 10.dp),
                         content = {
-                            Icon(modifier = Modifier.size(25.dp),imageVector = Icons.Rounded.Favorite, contentDescription = "Favourite Icons",tint = Color.Black)
+                            Icon(
+                                modifier = Modifier.size(25.dp),
+                                imageVector = Icons.Rounded.Favorite,
+                                contentDescription = "Favourite Icons",
+                                tint = Color.Black
+                            )
                         },
                     )
                     IconButton(
-                        onClick={},
+                        onClick = {},
                         modifier = Modifier
                             .size(40.dp)
                             .padding(end = 15.dp),
                         content = {
-                            Icon(modifier = Modifier.size(25.dp),imageVector = Icons.Rounded.Delete, contentDescription = "Favourite Icons",tint = Color(
-                                0xFF830505
-                            )
+                            Icon(
+                                modifier = Modifier.size(25.dp),
+                                imageVector = Icons.Rounded.Delete,
+                                contentDescription = "Favourite Icons",
+                                tint = Color(
+                                    0xFF830505
+                                )
                             )
                         },
                     )
@@ -92,18 +107,20 @@ fun HomeScreen(
                 navController.navigate("NewNoteScreen")
             })
         }
-    ){
+    ) {
 
         Box(
             modifier = Modifier
                 .padding(top = it.calculateTopPadding())
                 .fillMaxSize()
                 .background(Color1)
-        ){
+        ) {
             Column(
-                modifier = Modifier.padding(horizontal = 10.dp).padding(top=3.dp)
+                modifier = Modifier
+                    .padding(horizontal = 10.dp)
+                    .padding(top = 3.dp)
             ) {
-               // Text("Notes",modifier = Modifier.padding(15.dp).padding(start = 10.dp), fontFamily = fontFamily1,color = Color.Black, fontSize = 35.sp)
+                // Text("Notes",modifier = Modifier.padding(15.dp).padding(start = 10.dp), fontFamily = fontFamily1,color = Color.Black, fontSize = 35.sp)
                 LazyVerticalStaggeredGrid(
                     columns = StaggeredGridCells.Fixed(2),
                     verticalItemSpacing = 4.dp,
@@ -121,10 +138,8 @@ fun HomeScreen(
 }
 
 
-
-
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenPreview(){
+fun HomeScreenPreview() {
     //HomeScreen()
 }

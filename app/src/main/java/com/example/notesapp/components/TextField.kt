@@ -24,38 +24,38 @@ import java.time.format.TextStyle
 @Composable
 fun OurTextField(
     text: String,
-    onValueChange: (String)->Unit,
+    onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     hintText: String = "",
     hintTextStyle: androidx.compose.ui.text.TextStyle = MaterialTheme.typography.bodySmall,
     textStyle: androidx.compose.ui.text.TextStyle = MaterialTheme.typography.bodySmall,
     maxlines: Int = 1,
-    onImeAction: () ->Unit = {},
+    onImeAction: () -> Unit = {},
     flag: Boolean = false
-){
+) {
     val keyboardController = LocalSoftwareKeyboardController.current
     BasicTextField(
         value = text,
 
-        onValueChange= onValueChange,
+        onValueChange = onValueChange,
         modifier = modifier,
-        textStyle= textStyle,
+        textStyle = textStyle,
         maxLines = maxlines,
         keyboardOptions = KeyboardOptions.Default.copy(
-            imeAction = if(flag) ImeAction.Done else ImeAction.None
+            imeAction = if (flag) ImeAction.Done else ImeAction.None
 
         ),
         keyboardActions = KeyboardActions(
             onDone = {
-            onImeAction()
-            keyboardController?.hide()
+                onImeAction()
+                keyboardController?.hide()
             },
 
-        ),
+            ),
         decorationBox = { innerTextField ->
-            Box(){
-                if(text.isEmpty()){
-                    Text(text = hintText,style = hintTextStyle)
+            Box() {
+                if (text.isEmpty()) {
+                    Text(text = hintText, style = hintTextStyle)
                 }
                 innerTextField()
             }

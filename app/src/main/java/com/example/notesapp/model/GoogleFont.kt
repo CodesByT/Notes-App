@@ -22,6 +22,6 @@ val fontFamily1 = FontFamily(
 val fontFamily3 = FontFamily(
     Font(googleFont = font3, fontProvider = provider)
 )
-val fontFamily2= FontFamily(
+val fontFamily2 = FontFamily(
     Font(googleFont = font2, fontProvider = provider)
 )

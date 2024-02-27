@@ -52,16 +52,19 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.notesapp.R
 import com.example.notesapp.components.OurTextField
+import com.example.notesapp.model.Note
 import com.example.notesapp.model.font1
 import com.example.notesapp.model.fontFamily1
 import com.example.notesapp.model.fontFamily2
 import com.example.notesapp.model.fontFamily3
 import com.example.notesapp.ui.theme.Color1
+import com.example.notesapp.ui.theme.Color2
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewNoteScreen(
+    onAddNewNote: (Note) -> Unit,
     navController: NavController
 ) {
     var title by remember {
@@ -70,20 +73,20 @@ fun NewNoteScreen(
     var note by remember {
         mutableStateOf("")
     }
-    val context :Context  = LocalContext.current
+    val context: Context = LocalContext.current
     Scaffold(
         modifier = Modifier,
         topBar = {
             CenterAlignedTopAppBar(
                 modifier = Modifier.background(color = Color1),
                 title = {
-                    Text(text = "New Note", fontFamily= fontFamily1, fontSize = 30.sp)
+                    Text(text = "New Note", fontFamily = fontFamily1, fontSize = 30.sp)
                 },
                 navigationIcon = {
                     IconButton(
-                        onClick={
-                            navController.navigate("homepage"){
-                                popUpTo("homepage"){
+                        onClick = {
+                            navController.navigate("homepage") {
+                                popUpTo("homepage") {
                                     inclusive = true
                                 }
                             }
@@ -92,25 +95,35 @@ fun NewNoteScreen(
                             .size(40.dp)
                             .padding(end = 10.dp),
                         content = {
-                            Icon(imageVector = Icons.Rounded.ArrowBackIos, contentDescription = " BackIcon")
+                            Icon(
+                                imageVector = Icons.Rounded.ArrowBackIos,
+                                contentDescription = " BackIcon"
+                            )
                         },
                     )
                 },
                 colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color1),
                 actions = {
                     IconButton(
-                        onClick={
+                        onClick = {
                             // ADD NOTE TO LIST
+                            if (title.isNotEmpty() && note.isNotEmpty()) {
+                                onAddNewNote(Note(title = title, description = note))
+                            }
 
-
-                            Toast.makeText(context,"Note Saved",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Note Saved", Toast.LENGTH_SHORT).show()
                         },
                         modifier = Modifier
                             .size(40.dp)
                             .padding(end = 10.dp),
                         content = {
-                            Icon(modifier = Modifier
-                                .size(36.dp),imageVector = Icons.Rounded.Save, contentDescription = " Save Note Icon",tint = Color.Black)
+                            Icon(
+                                modifier = Modifier
+                                    .size(36.dp),
+                                imageVector = Icons.Rounded.Save,
+                                contentDescription = " Save Note Icon",
+                                tint = Color.Black
+                            )
                         },
                     )
                 },
@@ -118,35 +131,40 @@ fun NewNoteScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                modifier = Modifier.padding(bottom = 20.dp,end = 10.dp),
+                modifier = Modifier.padding(bottom = 20.dp, end = 10.dp),
                 onClick = {
                     // ADD NOTE TO LIST
 
-                    if(title.isNotEmpty() && note.isNotEmpty() ){
-
+                    if (title.isNotEmpty() && note.isNotEmpty()) {
+                        onAddNewNote(Note(title = title, description = note))
                     }
+                    Toast.makeText(context, "Note Saved", Toast.LENGTH_SHORT).show()
 
-
-                    Toast.makeText(context,"Note Saved",Toast.LENGTH_SHORT).show()
-                    navController.navigate("homepage"){
-                        popUpTo("homepage"){
+                    navController.navigate("homepage") {
+                        popUpTo("homepage") {
                             inclusive = true
                         }
                     }
                 }
             ) {
-                Icon(imageVector = Icons.Rounded.Save, contentDescription = " Save Note Icon",tint = Color.Black)
+                Icon(
+                    imageVector = Icons.Rounded.Save,
+                    contentDescription = " Save Note Icon",
+                    tint = Color.Black
+                )
             }
         }
     ) {
-        Column (
+        Column(
             modifier = Modifier
                 .padding(top = it.calculateTopPadding())
-                .background(color = Color1)
+                .background(color = Color2)
                 .fillMaxHeight()
-        ){
-            Box(modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center){
+        ) {
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
                 OurTextField(
                     text = title,
                     onValueChange = {
@@ -160,7 +178,7 @@ fun NewNoteScreen(
                     modifier = Modifier
                         .padding(horizontal = 25.dp)
                         .padding(top = 45.dp, bottom = 25.dp)
-                        .background(color = Color1),
+                        .background(color = Color2),
                     hintText = "           Title",
                     hintTextStyle = LocalTextStyle.current.copy(
                         color = Color(0x9EFFFFFF),
@@ -178,20 +196,24 @@ fun NewNoteScreen(
                     flag = true
                 )
             }
-            Divider(color = Color(0x9EFFFFFF),modifier = Modifier.padding(horizontal = 30.dp,))
+            Divider(color = Color(0x9EFFFFFF), modifier = Modifier.padding(horizontal = 30.dp))
             OurTextField(
                 text = note,
-                onValueChange = {note = it},
+                onValueChange = { note = it },
                 modifier = Modifier
                     .padding(top = 10.dp)
                     .padding(15.dp)
                     .fillMaxWidth()
-                    .background(color = Color1),
+                    .background(color = Color2),
                 hintText = "Write your note...",
-                hintTextStyle = TextStyle(color = Color(0x9EFFFFFF), fontSize = 19.sp,fontWeight = FontWeight.Medium,
-                    fontFamily = fontFamily3),
-                textStyle = TextStyle(color = Color(0xEBFFFFFF), fontSize = 19.sp,fontWeight = FontWeight.Medium,
-                    fontFamily = fontFamily3),
+                hintTextStyle = TextStyle(
+                    color = Color(0x9EFFFFFF), fontSize = 19.sp, fontWeight = FontWeight.Medium,
+                    fontFamily = fontFamily3
+                ),
+                textStyle = TextStyle(
+                    color = Color(0xEBFFFFFF), fontSize = 19.sp, fontWeight = FontWeight.Medium,
+                    fontFamily = fontFamily3
+                ),
                 maxlines = 500
             )
 
