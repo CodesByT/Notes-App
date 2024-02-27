@@ -11,14 +11,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.ArrowBackIos
+import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Notifications
+import androidx.compose.material.icons.rounded.Save
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -42,6 +49,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.notesapp.R
 import com.example.notesapp.components.OurTextField
 import com.example.notesapp.model.font1
@@ -53,7 +61,9 @@ import com.example.notesapp.ui.theme.Color1
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewNoteScreen() {
+fun NewNoteScreen(
+    navController: NavController
+) {
     var title by remember {
         mutableStateOf("")
     }
@@ -70,14 +80,68 @@ fun NewNoteScreen() {
                     Text(text = "New Note", fontFamily= fontFamily1, fontSize = 30.sp)
                 },
                 navigationIcon = {
-                    Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = " BackIcon")
+                    IconButton(
+                        onClick={
+                            navController.navigate("homepage"){
+                                popUpTo("homepage"){
+                                    inclusive = true
+                                }
+                            }
+                        },
+                        modifier = Modifier
+                            .size(40.dp)
+                            .padding(end = 10.dp),
+                        content = {
+                            Icon(imageVector = Icons.Rounded.ArrowBackIos, contentDescription = " BackIcon")
+                        },
+                    )
                 },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color1)
+                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color1),
+                actions = {
+                    IconButton(
+                        onClick={
+                            // ADD NOTE TO LIST
+
+
+                            Toast.makeText(context,"Note Saved",Toast.LENGTH_SHORT).show()
+                        },
+                        modifier = Modifier
+                            .size(40.dp)
+                            .padding(end = 10.dp),
+                        content = {
+                            Icon(modifier = Modifier
+                                .size(36.dp),imageVector = Icons.Rounded.Save, contentDescription = " Save Note Icon",tint = Color.Black)
+                        },
+                    )
+                },
             )
         },
+        floatingActionButton = {
+            FloatingActionButton(
+                modifier = Modifier.padding(bottom = 20.dp,end = 10.dp),
+                onClick = {
+                    // ADD NOTE TO LIST
+
+                    if(title.isNotEmpty() && note.isNotEmpty() ){
+
+                    }
+
+
+                    Toast.makeText(context,"Note Saved",Toast.LENGTH_SHORT).show()
+                    navController.navigate("homepage"){
+                        popUpTo("homepage"){
+                            inclusive = true
+                        }
+                    }
+                }
+            ) {
+                Icon(imageVector = Icons.Rounded.Save, contentDescription = " Save Note Icon",tint = Color.Black)
+            }
+        }
     ) {
         Column (
             modifier = Modifier
+                .padding(top = it.calculateTopPadding())
                 .background(color = Color1)
                 .fillMaxHeight()
         ){
@@ -95,7 +159,7 @@ fun NewNoteScreen() {
                     },
                     modifier = Modifier
                         .padding(horizontal = 25.dp)
-                        .padding(top = 100.dp, bottom = 25.dp)
+                        .padding(top = 45.dp, bottom = 25.dp)
                         .background(color = Color1),
                     hintText = "           Title",
                     hintTextStyle = LocalTextStyle.current.copy(

@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.notesapp"
-        minSdk = 21
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -69,5 +69,10 @@ dependencies {
 
     //--------------------------------------------------------------------------
     implementation("androidx.compose.ui:ui-text-google-fonts:1.6.1")
+    implementation("androidx.compose.material:material-icons-extended:1.5.3")
+
+    val nav_version = "2.7.7"
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+
 
 }
