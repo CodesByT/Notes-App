@@ -13,6 +13,7 @@ import com.example.notesapp.screens.HomeScreen
 import com.example.notesapp.screens.HomeScreenViewModel
 import com.example.notesapp.screens.NewNoteScreen
 import androidx.activity.viewModels
+import androidx.compose.runtime.collectAsState
 
 @Composable
 fun NavigationGraph() {
@@ -41,7 +42,7 @@ fun HomepageViewModelCompose(
     homeScreenViewModel: HomeScreenViewModel,
     navController: NavController
 ) {
-    var notesList = homeScreenViewModel.getAllNotes()
+    var notesList = homeScreenViewModel.noteList.collectAsState().value
     HomeScreen(
         notes = notesList,
         navController = navController
@@ -53,7 +54,7 @@ fun NewNoteScreenViewModelCompose(
     homeScreenViewModel: HomeScreenViewModel,
     navController: NavController
 ) {
-    var notesList = homeScreenViewModel.getAllNotes()
+    var notesList = homeScreenViewModel.noteList.collectAsState().value
 
     NewNoteScreen(
         onAddNewNote = {

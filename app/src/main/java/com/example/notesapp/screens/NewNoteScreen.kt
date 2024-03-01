@@ -109,9 +109,13 @@ fun NewNoteScreen(
                             // ADD NOTE TO LIST
                             if (title.isNotEmpty() && note.isNotEmpty()) {
                                 onAddNewNote(Note(title = title, description = note))
+                                Toast.makeText(context, "Note Saved", Toast.LENGTH_SHORT).show()
+                            } else if (title.isNotEmpty() && note.isEmpty()) {
+                                Toast.makeText(context, "fill the note!!", Toast.LENGTH_SHORT).show()
+                            } else if (title.isEmpty() && note.isNotEmpty()) {
+                                Toast.makeText(context, "fill the title!!", Toast.LENGTH_SHORT).show()
                             }
 
-                            Toast.makeText(context, "Note Saved", Toast.LENGTH_SHORT).show()
                         },
                         modifier = Modifier
                             .size(40.dp)
@@ -133,18 +137,23 @@ fun NewNoteScreen(
             FloatingActionButton(
                 modifier = Modifier.padding(bottom = 20.dp, end = 10.dp),
                 onClick = {
-                    // ADD NOTE TO LIST
-
                     if (title.isNotEmpty() && note.isNotEmpty()) {
-                        onAddNewNote(Note(title = title, description = note))
-                    }
-                    Toast.makeText(context, "Note Saved", Toast.LENGTH_SHORT).show()
 
-                    navController.navigate("homepage") {
-                        popUpTo("homepage") {
-                            inclusive = true
+                        // ADD NOTE TO LIST
+                        onAddNewNote(Note(title = title, description = note))
+                        Toast.makeText(context, "Note Saved", Toast.LENGTH_SHORT).show()
+
+                        navController.navigate("homepage") {
+                            popUpTo("homepage") {
+                                inclusive = true
+                            }
                         }
+                    } else if (title.isNotEmpty() && note.isEmpty()) {
+                        Toast.makeText(context, "fill the note!!", Toast.LENGTH_SHORT).show()
+                    } else if (title.isEmpty() && note.isNotEmpty()) {
+                        Toast.makeText(context, "fill the title!!", Toast.LENGTH_SHORT).show()
                     }
+
                 }
             ) {
                 Icon(
