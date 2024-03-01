@@ -44,7 +44,7 @@ fun NoteCard(note: Note) {
             )
             Text(
                 modifier = Modifier.padding(top = 5.dp),
-                text = note.entryData.format(DateTimeFormatter.ofPattern("EEE, d MMM")),
+                text = note.entryData.time.toString(),//format(DateTimeFormatter.ofPattern("EEE, d MMM"))
                 color = Color(0xFF80DEEA),
                 fontSize = 12.sp,
                 fontStyle = FontStyle.Italic
