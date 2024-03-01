@@ -1,6 +1,11 @@
 package com.example.notesapp.components
 
+import android.util.Log
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -16,12 +21,22 @@ import androidx.compose.ui.unit.sp
 import com.example.notesapp.model.Note
 import com.example.notesapp.model.fontFamily2
 import com.example.notesapp.ui.theme.Color2
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NoteCard(note: Note) {
 
+    val formatter1 = DateTimeFormatter.ofPattern("dd MMM yyyy")
+    val formatter2 = DateTimeFormatter.ofPattern("HH:mm")
+    val formattedDate = LocalDateTime.ofInstant(note.entryData.toInstant(), ZoneId.systemDefault())
+        .format(formatter1)
+    val formattedTime = LocalDateTime.ofInstant(note.entryData.toInstant(), ZoneId.systemDefault())
+        .format(formatter2)
+
+    Log.d("", formattedDate)
     Card(
         modifier = Modifier.padding(3.dp),
         onClick = { /*TODO*/ },
@@ -42,13 +57,26 @@ fun NoteCard(note: Note) {
                 fontFamily = fontFamily2,
                 fontSize = 18.sp
             )
-            Text(
-                modifier = Modifier.padding(top = 5.dp),
-                text = note.entryData.time.toString(),//format(DateTimeFormatter.ofPattern("EEE, d MMM"))
+            Row (
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ){
+                Text(
+                    modifier = Modifier.padding(top = 5.dp),
+                    text = formattedDate,
+                    color = Color(0xFF80DEEA),
+                    fontSize = 12.sp,
+                    fontStyle = FontStyle.Italic
+                )
+                Text(
+                    modifier = Modifier.padding(top = 5.dp),
+                text = formattedTime,
                 color = Color(0xFF80DEEA),
                 fontSize = 12.sp,
                 fontStyle = FontStyle.Italic
-            )
+                )
+            }
+
             Text(
                 modifier = Modifier.padding(top = 5.dp),
                 text = note.description,
