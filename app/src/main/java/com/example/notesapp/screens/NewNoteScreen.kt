@@ -67,12 +67,13 @@ fun NewNoteScreen(
     onAddNewNote: (Note) -> Unit,
     navController: NavController
 ) {
-    var title by remember {
-        mutableStateOf("")
-    }
-    var note by remember {
-        mutableStateOf("")
-    }
+    var title by remember { mutableStateOf("") }
+    var note by remember { mutableStateOf("") }
+
+    var title2 by remember { mutableStateOf("") }
+    var note2 by remember { mutableStateOf("") }
+
+
     val context: Context = LocalContext.current
     Scaffold(
         modifier = Modifier,
@@ -107,13 +108,22 @@ fun NewNoteScreen(
                     IconButton(
                         onClick = {
                             // ADD NOTE TO LIST
-                            if (title.isNotEmpty() && note.isNotEmpty()) {
-                                onAddNewNote(Note(title = title, description = note))
-                                Toast.makeText(context, "Note Saved", Toast.LENGTH_SHORT).show()
-                            } else if (title.isNotEmpty() && note.isEmpty()) {
-                                Toast.makeText(context, "fill the note!!", Toast.LENGTH_SHORT).show()
-                            } else if (title.isEmpty() && note.isNotEmpty()) {
-                                Toast.makeText(context, "fill the title!!", Toast.LENGTH_SHORT).show()
+                            if (note2 != note || title2 != title) {
+                                if (title.isNotEmpty() && note.isNotEmpty()) {
+
+                                    title2 = title
+                                    note2 = note
+
+                                    onAddNewNote(Note(title = title, description = note))
+                                    Toast.makeText(context, "Note Saved", Toast.LENGTH_SHORT).show()
+
+                                } else if (title.isNotEmpty() && note.isEmpty()) {
+                                    Toast.makeText(context, "fill the note!!", Toast.LENGTH_SHORT)
+                                        .show()
+                                } else if (title.isEmpty() && note.isNotEmpty()) {
+                                    Toast.makeText(context, "fill the title!!", Toast.LENGTH_SHORT)
+                                        .show()
+                                }
                             }
 
                         },
@@ -137,23 +147,26 @@ fun NewNoteScreen(
             FloatingActionButton(
                 modifier = Modifier.padding(bottom = 20.dp, end = 10.dp),
                 onClick = {
-                    if (title.isNotEmpty() && note.isNotEmpty()) {
+                    if (note2 != note || title2 != title) {
 
-                        // ADD NOTE TO LIST
-                        onAddNewNote(Note(title = title, description = note))
-                        Toast.makeText(context, "Note Saved", Toast.LENGTH_SHORT).show()
+                        if (title.isNotEmpty() && note.isNotEmpty()) {
 
-                        navController.navigate("homepage") {
-                            popUpTo("homepage") {
-                                inclusive = true
+                            // ADD NOTE TO LIST
+                            onAddNewNote(Note(title = title, description = note))
+                            Toast.makeText(context, "Note Saved", Toast.LENGTH_SHORT).show()
+
+                            navController.navigate("homepage") {
+                                popUpTo("homepage") {
+                                    inclusive = true
+                                }
                             }
+                        } else if (title.isNotEmpty() && note.isEmpty()) {
+                            Toast.makeText(context, "fill the note!!", Toast.LENGTH_SHORT).show()
+                        } else if (title.isEmpty() && note.isNotEmpty()) {
+                            Toast.makeText(context, "fill the title!!", Toast.LENGTH_SHORT).show()
                         }
-                    } else if (title.isNotEmpty() && note.isEmpty()) {
-                        Toast.makeText(context, "fill the note!!", Toast.LENGTH_SHORT).show()
-                    } else if (title.isEmpty() && note.isNotEmpty()) {
-                        Toast.makeText(context, "fill the title!!", Toast.LENGTH_SHORT).show()
-                    }
 
+                    }
                 }
             ) {
                 Icon(

@@ -1,7 +1,6 @@
 package com.example.notesapp.components
 
 import android.util.Log
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +17,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.notesapp.model.Note
 import com.example.notesapp.model.fontFamily2
 import com.example.notesapp.ui.theme.Color2
@@ -27,7 +27,7 @@ import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NoteCard(note: Note) {
+fun NoteCard(note: Note, navController: NavController) {
 
     val formatter1 = DateTimeFormatter.ofPattern("dd MMM yyyy")
     val formatter2 = DateTimeFormatter.ofPattern("HH:mm")
@@ -39,13 +39,19 @@ fun NoteCard(note: Note) {
     Log.d("", formattedDate)
     Card(
         modifier = Modifier.padding(3.dp),
-        onClick = { /*TODO*/ },
+        onClick = {
+            Log.d("","Working till here MR.T")
+            navController.navigate("NoteScreen/${note.id.toString()}")
+            Log.d("","Working till here2 MR.T")
+
+        },
         colors = CardDefaults.cardColors(
             containerColor = Color2
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
+
     ) {
         Column(
             modifier = Modifier.padding(10.dp)
